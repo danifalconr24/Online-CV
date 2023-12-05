@@ -7,15 +7,14 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
-public class OnlineCVResourceTest {
+public class CurriculumVitaeResourceTest {
 
     @Test
     public void testHelloEndpoint() {
         given()
-          .when().get("/hello")
+          .when().get("/v1/curriculum-vitae/latest")
           .then()
-             .statusCode(200)
-             .body(is("Hello from RESTEasy Reactive"));
+             .statusCode(200);
     }
 
 }
