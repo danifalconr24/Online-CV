@@ -5,11 +5,13 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
 
 @Entity
-public class LaboralExperience extends PanacheEntity {
+public class WorkExperience extends PanacheEntity {
 
-    public String From;
+    public String startDate;
 
-    public String to;
+    public String endDate;
+
+    public Boolean current;
 
     public String company;
 

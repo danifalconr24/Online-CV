@@ -1,16 +1,25 @@
 package es.danifalconr.api;
 
+import es.danifalconr.model.AcademicStudies;
+import es.danifalconr.model.WorkExperience;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
 
-@Path("/hello")
+import java.util.List;
+
+@Path("/v1")
 public class OnlineCVResource {
 
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return "Hello from RESTEasy Reactive";
+    @Path("/work-experiences")
+    public List<WorkExperience> getWorkExperiences() {
+        return WorkExperience.listAll();
     }
+
+    @GET
+    @Path("/academic-studies")
+    public List<AcademicStudies> getAcademicStudies() {
+        return AcademicStudies.listAll();
+    }
+
 }
