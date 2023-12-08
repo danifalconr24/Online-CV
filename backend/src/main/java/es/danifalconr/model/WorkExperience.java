@@ -12,15 +12,17 @@ import java.time.Instant;
 @Entity
 public class WorkExperience extends PanacheEntity {
 
+    @Column(nullable = false)
     public String startDate;
 
     public String endDate;
 
     public Boolean current;
 
+    @Column(nullable = false)
     public String company;
 
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition="TEXT", nullable = false)
     public String description;
 
     @UpdateTimestamp

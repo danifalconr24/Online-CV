@@ -1,6 +1,6 @@
 package es.danifalconr.api;
 
-import es.danifalconr.model.CurriculumVitae;
+import es.danifalconr.model.AcademicStudies;
 import es.danifalconr.model.WorkExperience;
 import io.quarkus.panache.common.Sort;
 import jakarta.transaction.Transactional;
@@ -15,16 +15,33 @@ import java.util.List;
 public class CurriculumVitaeResource {
 
     @POST
+    @Path("/work-experience")
     @Transactional
-    public CurriculumVitae createCurriculumVitae(CurriculumVitae curriculumVitae) {
-        curriculumVitae.persist();
-        return curriculumVitae;
+    public WorkExperience createWorkExperience(WorkExperience workExperience) {
+        workExperience.persist();
+        return workExperience;
+    }
+
+    @POST
+    @Path("/academic-studies")
+    @Transactional
+    public AcademicStudies createAcademicStudy(AcademicStudies academicStudies) {
+        academicStudies.persist();
+        return academicStudies;
     }
 
     @GET
-    @Path("/latest")
-    public List<WorkExperience> getCurriculumData() {
-        return CurriculumVitae.listAll(Sort.by("createdAt").descending());
+    @Transactional
+    @Path("/work-experiences")
+    public List<WorkExperience> getWorkExperiences() {
+        return WorkExperience.listAll(Sort.by("createdAt").descending());
+    }
+
+    @GET
+    @Transactional
+    @Path("/academic-studies")
+    public List<AcademicStudies> getAcademicStudies() {
+        return AcademicStudies.listAll(Sort.by("createdAt").descending());
     }
 
 }
