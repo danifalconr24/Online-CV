@@ -1,26 +1,44 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="header-section">
+    <h1>Daniel Falcón Ruiz</h1>
+  </div>
+  <hr>
+  <WorkExperiencesSection/>
+  <AcademicStudiesSection/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AcademicStudiesSection from './components/AcademicStudiesSection.vue';
+import WorkExperiencesSection from './components/WorkExperiencesSection.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    WorkExperiencesSection,
+    AcademicStudiesSection
+}
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body {
+  margin: 0;
 }
+
+hr {
+  margin: 0;
+}
+
+#header-section {
+  background-color: crimson;
+  width: 100%;
+  height: 50px;
+  padding: 2%;
+}
+
+h1 {
+  margin: auto;
+  font-size: 40px;
+}
+
 </style>
