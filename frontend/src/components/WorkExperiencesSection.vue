@@ -1,31 +1,36 @@
 <template>
-  <div :v-if="workExperienceData.length" v-for="(workExperience, index) in workExperienceData" v-bind:key="workExperience.id">
+  <div id="main-container">
     <h2>Work Experiences</h2>
-    <h3>{{ index + 1 }}. {{ workExperience.company }}</h3>
-    <p>{{ workExperience.description }}</p>
+    <div v-for="(workExperience, index) in workExperienceData" v-bind:key="workExperience.id">
+      <h3>{{ index + 1 }}. {{ workExperience.company }}</h3>
+      <p>{{ workExperience.description }}</p>
+    </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { defineComponent, onBeforeMount, ref, type Ref } from 'vue';
 
-import { onBeforeMount, ref } from 'vue';
+defineComponent({
+  name: 'WorkExperiencesSection'
+});
 
-let workExperienceData = ref(Array.of({
-  id: Number,
-  company: String,
-  description: String,
-  startDate: String,
-  endDate: String,
+let workExperienceData: Ref<{
+  id: number,
+  company: string,
+  description: string,
+  startDate: string,
+  endDate: string,
   createdAt: Date,
   updatedAt: Date
-}));
+}[]> = ref([]);
 
 onBeforeMount(async () => {
   const response = await fetch("http://localhost:8080/v1/curriculum-vitae/work-experiences")
   console.log(response);
-  workExperienceData.value = await response.json();
+  if (response.ok) {
+    workExperienceData.value = await response.json();
+  }
 });
 
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->

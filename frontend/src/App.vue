@@ -3,21 +3,25 @@
     <h1>Daniel Falcón Ruiz</h1>
   </div>
   <hr>
-  <WorkExperiencesSection/>
-  <AcademicStudiesSection/>
+
+  <div id="content-section">
+    <WorkExperiencesSection />
+    <AcademicStudiesSection />
+  </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { defineComponent } from 'vue';
 import AcademicStudiesSection from './components/AcademicStudiesSection.vue';
 import WorkExperiencesSection from './components/WorkExperiencesSection.vue'
 
-export default {
+defineComponent({
   name: 'App',
   components: {
     WorkExperiencesSection,
     AcademicStudiesSection
-}
-}
+  }
+})
 </script>
 
 <style>
@@ -36,9 +40,12 @@ hr {
   padding: 2%;
 }
 
+#content-section {
+  padding: 2%;
+}
+
 h1 {
   margin: auto;
   font-size: 40px;
 }
-
 </style>

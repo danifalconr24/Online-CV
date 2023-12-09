@@ -1,19 +1,21 @@
 <template>
     <h2>Academic Studies</h2>
-    <h3>1. {{ academicStudiesData.at(0).schoolName }}</h3>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { defineComponent, onBeforeMount, ref, type Ref } from 'vue';
 
-import { onBeforeMount, ref } from 'vue';
+defineComponent({
+    name: 'AcademicStudiesSection'
+})
 
-let academicStudiesData = ref(Array.of({
-    id: Number,
-    schoolName: String,
-    titleName: String,
+let academicStudiesData: Ref<{
+    id: number,
+    schoolName: string,
+    titleName: string,
     createdAt: Date,
     updatedAt: Date
-}));
+}[]> = ref([]);
 
 onBeforeMount(async () => {
     const response = await fetch("http://localhost:8080/v1/curriculum-vitae/academic-studies")
