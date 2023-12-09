@@ -3,7 +3,27 @@
     <h1>Daniel Falcón Ruiz</h1>
   </div>
   <hr>
+  
+  <div id="aboutme-section">
+    <h2>About me</h2>
+    <pre>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at mi quis mauris egestas tempus.
+      Curabitur commodo, nisi eu hendrerit viverra, diam nisl egestas dolor, ac blandit est erat eu eros.
 
+      Morbi auctor gravida lorem, eget vulputate eros facilisis auctor. Vestibulum maximus lectus velit,
+      quis iaculis ex fringilla sed. Vestibulum placerat vel odio in efficitur. Etiam tempor tempus lacus. 
+
+      Suspendisse in dapibus arcu, ac commodo quam. Vivamus pharetra neque eu rutrum congue. Nullam laoreet 
+      tincidunt ipsum varius consectetur.
+      
+      Mauris at magna pharetra, suscipit odio at, suscipit lacus. 
+      
+      Aliquam id tellus augue. Mauris ut enim purus. Proin ac sem ut leo aliquam rutrum vel quis elit. Donec et euismod 
+      velit. Vestibulum molestie posuere erat. Duis orci metus, efficitur nec finibus sed, porttitor ac nibh. 
+      In rutrum tristique pharetra. Fusce molestie sem id massa rhoncus, eget feugiat odio porttitor.
+    </pre>
+  </div>
+  
   <div id="content-section">
     <WorkExperiencesSection />
     <AcademicStudiesSection />
@@ -41,6 +61,10 @@ hr {
 }
 
 #content-section {
+  padding: 2%;
+}
+
+#aboutme-section {
   padding: 2%;
 }
 

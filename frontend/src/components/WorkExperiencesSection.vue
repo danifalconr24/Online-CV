@@ -26,8 +26,9 @@ let workExperienceData: Ref<{
 }[]> = ref([]);
 
 onBeforeMount(async () => {
-  const response = await fetch("http://localhost:8080/v1/curriculum-vitae/work-experiences")
+  const response = await fetch("http://localhost:8081/v1/curriculum-vitae/work-experiences")
   console.log(response);
+  
   if (response.ok) {
     workExperienceData.value = await response.json();
   }

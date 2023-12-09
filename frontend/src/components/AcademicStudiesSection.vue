@@ -1,5 +1,8 @@
 <template>
     <h2>Academic Studies</h2>
+    <div v-for="(academicStudy, index) in academicStudiesData" v-bind:key="academicStudy.id">
+        <span><b>{{ index + 1 }}. {{ academicStudy.titleName }}: </b></span><span>{{ academicStudy.schoolName }}</span>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -18,9 +21,12 @@ let academicStudiesData: Ref<{
 }[]> = ref([]);
 
 onBeforeMount(async () => {
-    const response = await fetch("http://localhost:8080/v1/curriculum-vitae/academic-studies")
+    const response = await fetch("http://localhost:8081/v1/curriculum-vitae/academic-studies")
     console.log(response);
-    academicStudiesData.value = await response.json();
+
+    if (response.ok) {
+        academicStudiesData.value = await response.json();
+    }
 });
 
 </script>
