@@ -9,7 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
 
 @Entity
-public class AcademicStudies extends PanacheEntity {
+public class AcademicStudy extends PanacheEntity {
 
     @Column(nullable = false)
     public String schoolName;

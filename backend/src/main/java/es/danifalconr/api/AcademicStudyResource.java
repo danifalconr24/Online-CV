@@ -11,7 +11,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/v1/curriculum-vitae/academic-studies")
-public class AcademicStudiesResource {
+public class AcademicStudyResource {
 
     @POST
     @Transactional
