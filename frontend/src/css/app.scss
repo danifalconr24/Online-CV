@@ -1,1 +1,294 @@
 // app global css in SCSS form
+
+body {
+  background-color: #F9FAFB;
+  color: #111827;
+}
+
+.cv-container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+// ─── Header ────────────────────────────────────────────────────────────────
+
+.cv-header {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.04);
+  padding: 48px 52px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background: #4F46E5;
+    border-radius: 20px 0 0 20px;
+  }
+}
+
+.cv-header__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+}
+
+.cv-header__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #4F46E5;
+  margin: 0 0 14px;
+}
+
+.cv-header__name {
+  font-size: 44px;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1.1;
+  margin: 0;
+  letter-spacing: -0.025em;
+}
+
+.cv-header__photo-wrap {
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #E5E7EB;
+  box-shadow: 0 2px 12px rgba(79, 70, 229, 0.12);
+}
+
+// ─── Sections ───────────────────────────────────────────────────────────────
+
+.cv-section {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.04);
+  padding: 40px 52px;
+  margin-bottom: 20px;
+}
+
+.cv-section__tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #4F46E5;
+  background: #EEF2FF;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.cv-section__title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  margin: 10px 0 28px;
+  letter-spacing: -0.015em;
+}
+
+// ─── About Me ───────────────────────────────────────────────────────────────
+
+.cv-about__text {
+  color: #4B5563;
+  line-height: 1.8;
+  font-size: 15px;
+  margin: 0;
+}
+
+// ─── Work Experience ────────────────────────────────────────────────────────
+
+.cv-experience-list {
+  position: relative;
+}
+
+.cv-experience-item {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 36px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 9px;
+    height: 9px;
+    background: #4F46E5;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px #EEF2FF;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 22px;
+    bottom: -32px;
+    width: 1px;
+    background: #E5E7EB;
+  }
+
+  &:last-child::after {
+    display: none;
+  }
+}
+
+.cv-experience__company {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 4px;
+}
+
+.cv-experience__date {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6B7280;
+  margin: 0 0 10px;
+  letter-spacing: 0.02em;
+}
+
+.cv-experience__desc {
+  font-size: 14px;
+  color: #4B5563;
+  line-height: 1.7;
+  margin: 0;
+}
+
+// ─── Academic Studies ────────────────────────────────────────────────────────
+
+.cv-academic-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.cv-academic-card {
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 20px 22px;
+  transition: border-color 0.2s, background 0.2s;
+
+  &:hover {
+    border-color: #C7D2FE;
+    background: #FAFAFA;
+  }
+}
+
+.cv-academic__icon {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.cv-academic__degree {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 6px;
+  line-height: 1.4;
+}
+
+.cv-academic__school {
+  font-size: 13px;
+  color: #6B7280;
+  margin: 0;
+}
+
+// ─── Responsive ─────────────────────────────────────────────────────────────
+
+// Tablet (≤ 768px)
+@media (max-width: 768px) {
+  .cv-container {
+    padding: 32px 20px 64px;
+  }
+
+  .cv-header,
+  .cv-section {
+    padding: 36px 40px;
+  }
+
+  .cv-header__name {
+    font-size: 36px;
+  }
+
+  .cv-header__photo-wrap {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+// Mobile (≤ 480px)
+@media (max-width: 480px) {
+  .cv-container {
+    padding: 16px 12px 48px;
+  }
+
+  .cv-header {
+    padding: 28px 20px;
+    border-radius: 16px;
+
+    &::before {
+      border-radius: 16px 0 0 16px;
+    }
+  }
+
+  .cv-section {
+    padding: 24px 20px;
+    border-radius: 16px;
+    margin-bottom: 14px;
+  }
+
+  // Stack photo above name on small screens
+  .cv-header__content {
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .cv-header__photo-wrap {
+    width: 88px;
+    height: 88px;
+  }
+
+  .cv-header__label {
+    margin-bottom: 10px;
+  }
+
+  .cv-header__name {
+    font-size: 28px;
+    letter-spacing: -0.02em;
+  }
+
+  .cv-section__title {
+    font-size: 19px;
+    margin-bottom: 20px;
+  }
+
+  .cv-experience-item {
+    padding-left: 18px;
+    margin-bottom: 28px;
+  }
+
+  .cv-academic-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
