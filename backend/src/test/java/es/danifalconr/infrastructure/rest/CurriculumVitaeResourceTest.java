@@ -24,18 +24,8 @@ public class CurriculumVitaeResourceTest {
     @BeforeEach
     @TestTransaction
     void setUp() {
-        WorkExperience workExperience = new WorkExperience();
-        workExperience.setCompany("test company");
-        workExperience.setDescription("test description");
-        workExperience.setCurrent(false);
-        workExperience.setStartDate("01/01/2021");
-        workExperience.setEndDate("31/12/2021");
-        workExperienceService.create(workExperience);
-
-        AcademicStudy academicStudy = new AcademicStudy();
-        academicStudy.setTitleName("test title name");
-        academicStudy.setSchoolName("test school name");
-        academicStudyService.create(academicStudy);
+        workExperienceService.create(new WorkExperience(null, "01/01/2021", "31/12/2021", false, "test company", "test description"));
+        academicStudyService.create(new AcademicStudy(null, "test school name", "test title name"));
     }
 
     @Test
