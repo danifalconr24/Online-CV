@@ -47,3 +47,11 @@ java -jar target/quarkus-app/quarkus-run.jar
 **CORS**: Allowed origin is `http://localhost:9000` (frontend dev server).
 
 **Testing**: JUnit 5 + REST Assured + Mockito. Test HTTP port is randomized (`quarkus.http.test-port=0`).
+
+### Coding Standards
+- **Java Streams API**: Prefer functional programming with streams for collections processing
+- **Lombok**: Use annotations (`@Data`, `@Builder`, `@AllArgsConstructor`, etc.) to reduce boilerplate
+- **Use Java 21 virtual threads**: On every new API request
+- **Try to prioritize Java records instead of Lombok**
+- **Namings**: All variables uses descriptive names and always in english, and classes also in english always.
+- **Readability**: Try to make code readable and follow KISS principles.
