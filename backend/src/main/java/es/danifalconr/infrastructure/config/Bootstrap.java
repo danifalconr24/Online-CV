@@ -57,7 +57,7 @@ public class Bootstrap {
         everisExperience.setEndDate("01/05/2020");
 
         WorkExperience bitingBitExperience = new WorkExperience();
-        bitingBitExperience.setCompany("BitingBit Campus S.L.U");
+        bitingBitExperience.setCompany("BitingBit / Volkswagen");
         bitingBitExperience.setDescription("""
                 Developing big user base applications, for an automotive company, using Quarkus native \
                 compilation support for providing really low memory and CPU consumption API's that \
