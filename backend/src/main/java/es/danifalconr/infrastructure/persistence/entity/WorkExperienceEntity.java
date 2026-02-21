@@ -1,16 +1,17 @@
-package es.danifalconr.model;
-
+package es.danifalconr.infrastructure.persistence.entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 
 @Entity
-public class WorkExperience extends PanacheEntity {
+@Table(name = "WorkExperience")
+public class WorkExperienceEntity extends PanacheEntity {
 
     @Column(nullable = false)
     public String startDate;
@@ -22,13 +23,12 @@ public class WorkExperience extends PanacheEntity {
     @Column(nullable = false)
     public String company;
 
-    @Column(columnDefinition="TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     public String description;
 
     @UpdateTimestamp
-    Instant updatedAt;
+    public Instant updatedAt;
 
     @CreationTimestamp
-    Instant createdAt;
-
+    public Instant createdAt;
 }
