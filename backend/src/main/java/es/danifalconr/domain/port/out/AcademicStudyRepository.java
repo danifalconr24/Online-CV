@@ -8,5 +8,9 @@ public interface AcademicStudyRepository {
 
     AcademicStudy save(AcademicStudy academicStudy);
 
+    AcademicStudy update(Long id, AcademicStudy academicStudy);
+
+    void remove(Long id);
+
     List<AcademicStudy> findAllOrderByCreatedAtDesc();
 }

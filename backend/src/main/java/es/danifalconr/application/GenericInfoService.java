@@ -23,4 +23,9 @@ public class GenericInfoService {
     public GenericInfo save(GenericInfo genericInfo) {
         return genericInfoRepository.save(genericInfo);
     }
+
+    @Transactional
+    public GenericInfo update(Long id, GenericInfo genericInfo) {
+        return genericInfoRepository.update(id, genericInfo);
+    }
 }

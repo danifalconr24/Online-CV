@@ -211,6 +211,97 @@ body {
   margin: 0;
 }
 
+// ─── Auth / CRUD Controls ────────────────────────────────────────────────────
+
+.cv-header__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.cv-login-btn {
+  color: #4F46E5;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cv-section__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0;
+}
+
+.cv-edit-btn {
+  color: #4F46E5;
+}
+
+.cv-experience__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cv-academic__actions-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.cv-item-actions {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.cv-edit-field {
+  margin-bottom: 12px;
+}
+
+.cv-edit-row {
+  display: flex;
+  gap: 12px;
+
+  .cv-edit-field {
+    flex: 1;
+  }
+}
+
+.cv-edit__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.cv-about__edit {
+  margin-top: 4px;
+}
+
+.cv-about__textarea {
+  margin-bottom: 12px;
+}
+
+.cv-experience-item--edit {
+  padding: 16px;
+  border: 1px dashed #C7D2FE;
+  border-radius: 10px;
+  margin-bottom: 16px;
+
+  &::before,
+  &::after {
+    display: none;
+  }
+}
+
+.cv-academic-card--edit {
+  border-style: dashed;
+  border-color: #C7D2FE;
+  margin-bottom: 14px;
+}
+
 // ─── Responsive ─────────────────────────────────────────────────────────────
 
 // Tablet (≤ 768px)

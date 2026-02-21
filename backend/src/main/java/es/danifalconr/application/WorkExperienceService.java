@@ -22,6 +22,16 @@ public class WorkExperienceService {
     }
 
     @Transactional
+    public WorkExperience update(Long id, WorkExperience workExperience) {
+        return workExperienceRepository.update(id, workExperience);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        workExperienceRepository.remove(id);
+    }
+
+    @Transactional
     public List<WorkExperience> getAll() {
         return workExperienceRepository.findAllOrderByCreatedAtDesc();
     }

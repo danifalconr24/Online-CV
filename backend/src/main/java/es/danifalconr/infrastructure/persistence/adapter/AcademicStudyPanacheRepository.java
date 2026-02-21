@@ -21,6 +21,26 @@ public class AcademicStudyPanacheRepository implements AcademicStudyRepository, 
     }
 
     @Override
+    public AcademicStudy update(Long id, AcademicStudy academicStudy) {
+        AcademicStudyEntity entity = findById(id);
+        if (entity == null) {
+            throw new jakarta.ws.rs.NotFoundException("AcademicStudy not found with id: " + id);
+        }
+        entity.schoolName = academicStudy.getSchoolName();
+        entity.titleName = academicStudy.getTitleName();
+        return AcademicStudyPersistenceMapper.toDomain(entity);
+    }
+
+    @Override
+    public void remove(Long id) {
+        AcademicStudyEntity entity = findById(id);
+        if (entity == null) {
+            throw new jakarta.ws.rs.NotFoundException("AcademicStudy not found with id: " + id);
+        }
+        delete(entity);
+    }
+
+    @Override
     public List<AcademicStudy> findAllOrderByCreatedAtDesc() {
         return listAll(Sort.by("createdAt").descending())
                 .stream()

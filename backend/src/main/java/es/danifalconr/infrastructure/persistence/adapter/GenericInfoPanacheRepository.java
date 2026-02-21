@@ -21,6 +21,16 @@ public class GenericInfoPanacheRepository implements GenericInfoRepository, Pana
     }
 
     @Override
+    public GenericInfo update(Long id, GenericInfo genericInfo) {
+        GenericInfoEntity entity = findById(id);
+        if (entity == null) {
+            throw new jakarta.ws.rs.NotFoundException("GenericInfo not found with id: " + id);
+        }
+        entity.aboutMe = genericInfo.getAboutMe();
+        return GenericInfoPersistenceMapper.toDomain(entity);
+    }
+
+    @Override
     public GenericInfo findLatest() {
         List<GenericInfoEntity> all = listAll(Sort.by("updatedAt"));
         return all.isEmpty() ? null : GenericInfoPersistenceMapper.toDomain(all.getFirst());

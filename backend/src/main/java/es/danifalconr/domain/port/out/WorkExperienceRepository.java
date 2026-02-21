@@ -8,5 +8,9 @@ public interface WorkExperienceRepository {
 
     WorkExperience save(WorkExperience workExperience);
 
+    WorkExperience update(Long id, WorkExperience workExperience);
+
+    void remove(Long id);
+
     List<WorkExperience> findAllOrderByCreatedAtDesc();
 }

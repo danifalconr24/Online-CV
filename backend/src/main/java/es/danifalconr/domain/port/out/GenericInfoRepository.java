@@ -6,5 +6,7 @@ public interface GenericInfoRepository {
 
     GenericInfo save(GenericInfo genericInfo);
 
+    GenericInfo update(Long id, GenericInfo genericInfo);
+
     GenericInfo findLatest();
 }

@@ -22,6 +22,16 @@ public class AcademicStudyService {
     }
 
     @Transactional
+    public AcademicStudy update(Long id, AcademicStudy academicStudy) {
+        return academicStudyRepository.update(id, academicStudy);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        academicStudyRepository.remove(id);
+    }
+
+    @Transactional
     public List<AcademicStudy> getAll() {
         return academicStudyRepository.findAllOrderByCreatedAtDesc();
     }

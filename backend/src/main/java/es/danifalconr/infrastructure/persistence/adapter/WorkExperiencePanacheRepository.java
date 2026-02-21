@@ -21,6 +21,29 @@ public class WorkExperiencePanacheRepository implements WorkExperienceRepository
     }
 
     @Override
+    public WorkExperience update(Long id, WorkExperience workExperience) {
+        WorkExperienceEntity entity = findById(id);
+        if (entity == null) {
+            throw new jakarta.ws.rs.NotFoundException("WorkExperience not found with id: " + id);
+        }
+        entity.startDate = workExperience.getStartDate();
+        entity.endDate = workExperience.getEndDate();
+        entity.current = workExperience.getCurrent();
+        entity.company = workExperience.getCompany();
+        entity.description = workExperience.getDescription();
+        return WorkExperiencePersistenceMapper.toDomain(entity);
+    }
+
+    @Override
+    public void remove(Long id) {
+        WorkExperienceEntity entity = findById(id);
+        if (entity == null) {
+            throw new jakarta.ws.rs.NotFoundException("WorkExperience not found with id: " + id);
+        }
+        delete(entity);
+    }
+
+    @Override
     public List<WorkExperience> findAllOrderByCreatedAtDesc() {
         return listAll(Sort.by("createdAt").descending())
                 .stream()
