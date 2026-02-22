@@ -15,7 +15,8 @@ public final class WorkExperiencePersistenceMapper {
                 entity.endDate,
                 entity.current,
                 entity.company,
-                entity.description
+                entity.description,
+                entity.companyLogo
         );
     }
 
@@ -27,6 +28,7 @@ public final class WorkExperiencePersistenceMapper {
         entity.current = model.current();
         entity.company = model.company();
         entity.description = model.description();
+        entity.companyLogo = model.companyLogo();
         return entity;
     }
 }

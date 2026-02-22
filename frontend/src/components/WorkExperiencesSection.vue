@@ -21,6 +21,19 @@
         <q-input v-model="newDraft.endDate" label="End date (DD/MM/YYYY, blank = present)" outlined dense class="cv-edit-field" />
       </div>
       <q-input v-model="newDraft.description" label="Description" type="textarea" autogrow outlined dense class="cv-edit-field" />
+      <q-file
+        v-model="newLogoFile"
+        label="Company logo"
+        outlined
+        dense
+        accept="image/*"
+        class="cv-edit-field"
+      >
+        <template v-slot:prepend><q-icon name="image" /></template>
+      </q-file>
+      <div v-if="newLogoPreview" class="cv-experience__logo-preview">
+        <img :src="newLogoPreview" alt="Logo preview" />
+      </div>
       <div class="cv-edit__actions">
         <q-btn flat label="Cancel" @click="cancelCreate" />
         <q-btn unelevated color="primary" label="Create" :loading="saving" @click="createExperience" />
@@ -40,6 +53,19 @@
             <q-input v-model="editDraft.endDate" label="End date (DD/MM/YYYY, blank = present)" outlined dense class="cv-edit-field" />
           </div>
           <q-input v-model="editDraft.description" label="Description" type="textarea" autogrow outlined dense class="cv-edit-field" />
+          <q-file
+            v-model="editLogoFile"
+            label="Company logo"
+            outlined
+            dense
+            accept="image/*"
+            class="cv-edit-field"
+          >
+            <template v-slot:prepend><q-icon name="image" /></template>
+          </q-file>
+          <div v-if="editLogoPreview" class="cv-experience__logo-preview">
+            <img :src="editLogoPreview" alt="Logo preview" />
+          </div>
           <div class="cv-edit__actions">
             <q-btn flat label="Cancel" @click="cancelEdit" />
             <q-btn unelevated color="primary" label="Save" :loading="saving" @click="saveEdit(workExperience.id)" />
@@ -47,7 +73,15 @@
         </template>
         <template v-else>
           <div class="cv-experience__row">
-            <p class="cv-experience__company">{{ workExperience.company }}</p>
+            <div class="cv-experience__company-wrap">
+              <img
+                v-if="workExperience.companyLogo"
+                :src="'data:image/png;base64,' + workExperience.companyLogo"
+                alt="Company logo"
+                class="cv-experience__logo"
+              />
+              <p class="cv-experience__company">{{ workExperience.company }}</p>
+            </div>
             <div v-if="isAuthenticated" class="cv-item-actions">
               <q-btn flat round icon="edit" size="xs" @click="startEdit(workExperience)" />
               <q-btn flat round icon="delete" size="xs" color="negative" @click="deleteExperience(workExperience.id)" />
@@ -65,7 +99,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, onBeforeMount, ref, type Ref } from 'vue';
+import { computed, defineComponent, onBeforeMount, ref, type Ref } from 'vue';
 import { WorkExperience } from './types/models';
 
 defineComponent({
@@ -82,9 +116,21 @@ const BASE_URL = 'http://localhost:8080/v1/curriculum-vitae/work-experiences';
 let workExperienceData: Ref<WorkExperience[]> = ref([]);
 const editingId = ref<number | null>(null);
 const editDraft = ref({ company: '', startDate: '', endDate: '', description: '' });
+const editLogoFile = ref<File | null>(null);
 const creatingNew = ref(false);
 const newDraft = ref({ company: '', startDate: '', endDate: '', description: '' });
+const newLogoFile = ref<File | null>(null);
 const saving = ref(false);
+
+const newLogoPreview = computed(() => {
+  if (!newLogoFile.value) return null;
+  return URL.createObjectURL(newLogoFile.value);
+});
+
+const editLogoPreview = computed(() => {
+  if (!editLogoFile.value) return null;
+  return URL.createObjectURL(editLogoFile.value);
+});
 
 onBeforeMount(async () => {
   await loadAll();
@@ -97,8 +143,19 @@ async function loadAll() {
   }
 }
 
+async function uploadLogo(id: number, file: File) {
+  const formData = new FormData();
+  formData.append('file', file);
+  await fetch(`${BASE_URL}/${id}/logo`, {
+    method: 'PUT',
+    headers: { ...props.authHeaders() },
+    body: formData,
+  });
+}
+
 function startEdit(item: WorkExperience) {
   editingId.value = item.id;
+  editLogoFile.value = null;
   editDraft.value = {
     company: item.company,
     startDate: item.startDate,
@@ -109,6 +166,7 @@ function startEdit(item: WorkExperience) {
 
 function cancelEdit() {
   editingId.value = null;
+  editLogoFile.value = null;
 }
 
 async function saveEdit(id: number) {
@@ -124,8 +182,12 @@ async function saveEdit(id: number) {
     }),
   });
   if (response.ok) {
+    if (editLogoFile.value) {
+      await uploadLogo(id, editLogoFile.value);
+    }
     await loadAll();
     editingId.value = null;
+    editLogoFile.value = null;
   }
   saving.value = false;
 }
@@ -142,11 +204,13 @@ async function deleteExperience(id: number) {
 
 function startCreate() {
   newDraft.value = { company: '', startDate: '', endDate: '', description: '' };
+  newLogoFile.value = null;
   creatingNew.value = true;
 }
 
 function cancelCreate() {
   creatingNew.value = false;
+  newLogoFile.value = null;
 }
 
 async function createExperience() {
@@ -162,8 +226,13 @@ async function createExperience() {
     }),
   });
   if (response.ok) {
+    const created: WorkExperience = await response.json();
+    if (newLogoFile.value) {
+      await uploadLogo(created.id, newLogoFile.value);
+    }
     await loadAll();
     creatingNew.value = false;
+    newLogoFile.value = null;
   }
   saving.value = false;
 }

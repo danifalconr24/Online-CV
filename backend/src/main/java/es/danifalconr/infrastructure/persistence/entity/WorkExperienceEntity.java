@@ -26,6 +26,9 @@ public class WorkExperienceEntity extends PanacheEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     public String description;
 
+    @Column(columnDefinition = "TEXT")
+    public String companyLogo;
+
     @UpdateTimestamp
     public Instant updatedAt;
 

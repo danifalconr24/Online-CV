@@ -1,6 +1,7 @@
 package es.danifalconr.infrastructure.rest;
 
 import es.danifalconr.application.WorkExperienceService;
+import es.danifalconr.domain.model.WorkExperience;
 import es.danifalconr.infrastructure.rest.dto.WorkExperienceRequest;
 import es.danifalconr.infrastructure.rest.dto.WorkExperienceResponse;
 import jakarta.annotation.security.PermitAll;
@@ -10,7 +11,12 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.jboss.resteasy.reactive.RestForm;
+import org.jboss.resteasy.reactive.multipart.FileUpload;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Base64;
 import java.util.List;
 
 @Consumes(MediaType.APPLICATION_JSON)
@@ -52,5 +58,22 @@ public class WorkExperienceResource {
                 .stream()
                 .map(WorkExperienceResponse::fromDomain)
                 .toList();
+    }
+
+    @PUT
+    @Path("/{id}/logo")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @RolesAllowed("admin")
+    public WorkExperienceResponse uploadLogo(@PathParam("id") Long id, @RestForm("file") FileUpload file) throws IOException {
+        byte[] bytes = Files.readAllBytes(file.uploadedFile());
+        String base64Logo = Base64.getEncoder().encodeToString(bytes);
+        WorkExperience current = workExperienceService.getAll().stream()
+                .filter(w -> w.id().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("WorkExperience not found with id: " + id));
+        WorkExperience updated = new WorkExperience(
+                current.id(), current.startDate(), current.endDate(),
+                current.current(), current.company(), current.description(), base64Logo);
+        return WorkExperienceResponse.fromDomain(workExperienceService.update(id, updated));
     }
 }

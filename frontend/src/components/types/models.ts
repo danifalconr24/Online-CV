@@ -4,6 +4,7 @@ export interface WorkExperience {
   description: string,
   startDate: string,
   endDate: string,
+  companyLogo: string | null,
   createdAt: Date,
   updatedAt: Date
 }

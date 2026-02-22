@@ -6,6 +6,7 @@ public record WorkExperience(
         String endDate,
         Boolean current,
         String company,
-        String description
+        String description,
+        String companyLogo
 ) {
 }

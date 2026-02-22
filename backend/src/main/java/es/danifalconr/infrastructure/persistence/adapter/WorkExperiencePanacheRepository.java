@@ -32,6 +32,7 @@ public class WorkExperiencePanacheRepository implements WorkExperienceRepository
         entity.current = workExperience.current();
         entity.company = workExperience.company();
         entity.description = workExperience.description();
+        entity.companyLogo = workExperience.companyLogo();
         return WorkExperiencePersistenceMapper.toDomain(entity);
     }
 

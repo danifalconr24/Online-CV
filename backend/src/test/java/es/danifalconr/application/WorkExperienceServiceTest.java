@@ -25,8 +25,8 @@ class WorkExperienceServiceTest {
 
     @Test
     void create_delegatesToRepositoryAndReturnsPersistedEntity() {
-        WorkExperience input = new WorkExperience(null, "01/01/2021", "31/12/2021", false, "ACME Corp", "Software Engineer");
-        WorkExperience persisted = new WorkExperience(1L, "01/01/2021", "31/12/2021", false, "ACME Corp", "Software Engineer");
+        WorkExperience input = new WorkExperience(null, "01/01/2021", "31/12/2021", false, "ACME Corp", "Software Engineer", null);
+        WorkExperience persisted = new WorkExperience(1L, "01/01/2021", "31/12/2021", false, "ACME Corp", "Software Engineer", null);
         when(workExperienceRepository.save(input)).thenReturn(persisted);
 
         WorkExperience result = workExperienceService.create(input);
@@ -38,8 +38,8 @@ class WorkExperienceServiceTest {
 
     @Test
     void update_delegatesToRepositoryAndReturnsUpdatedEntity() {
-        WorkExperience input = new WorkExperience(null, "01/01/2021", "31/12/2021", false, "Updated Corp", "Updated role");
-        WorkExperience updated = new WorkExperience(1L, "01/01/2021", "31/12/2021", false, "Updated Corp", "Updated role");
+        WorkExperience input = new WorkExperience(null, "01/01/2021", "31/12/2021", false, "Updated Corp", "Updated role", null);
+        WorkExperience updated = new WorkExperience(1L, "01/01/2021", "31/12/2021", false, "Updated Corp", "Updated role", null);
         when(workExperienceRepository.update(1L, input)).thenReturn(updated);
 
         WorkExperience result = workExperienceService.update(1L, input);
@@ -51,7 +51,7 @@ class WorkExperienceServiceTest {
 
     @Test
     void update_whenEntityNotFound_propagatesEntityNotFoundException() {
-        WorkExperience input = new WorkExperience(null, "01/01/2021", null, false, "Company", "Desc");
+        WorkExperience input = new WorkExperience(null, "01/01/2021", null, false, "Company", "Desc", null);
         when(workExperienceRepository.update(999L, input))
                 .thenThrow(new EntityNotFoundException("WorkExperience not found with id: 999"));
 
@@ -78,8 +78,8 @@ class WorkExperienceServiceTest {
     @Test
     void getAll_returnsAllExperiencesOrderedByRepository() {
         List<WorkExperience> experiences = List.of(
-                new WorkExperience(2L, "01/01/2022", null, true, "Latest Corp", "Lead role"),
-                new WorkExperience(1L, "01/01/2020", "31/12/2021", false, "Old Corp", "Junior role")
+                new WorkExperience(2L, "01/01/2022", null, true, "Latest Corp", "Lead role", null),
+                new WorkExperience(1L, "01/01/2020", "31/12/2021", false, "Old Corp", "Junior role", null)
         );
         when(workExperienceRepository.findAllOrderByCreatedAtDesc()).thenReturn(experiences);
 

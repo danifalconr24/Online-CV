@@ -8,10 +8,11 @@ public record WorkExperienceRequest(
         String endDate,
         Boolean current,
         @NotNull String company,
-        @NotNull String description
+        @NotNull String description,
+        String companyLogo
 ) {
 
     public WorkExperience toDomain() {
-        return new WorkExperience(null, startDate, endDate, current, company, description);
+        return new WorkExperience(null, startDate, endDate, current, company, description, companyLogo);
     }
 }

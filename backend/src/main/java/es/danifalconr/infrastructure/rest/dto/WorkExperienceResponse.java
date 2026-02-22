@@ -8,7 +8,8 @@ public record WorkExperienceResponse(
         String endDate,
         Boolean current,
         String company,
-        String description
+        String description,
+        String companyLogo
 ) {
 
     public static WorkExperienceResponse fromDomain(WorkExperience model) {
@@ -18,7 +19,8 @@ public record WorkExperienceResponse(
                 model.endDate(),
                 model.current(),
                 model.company(),
-                model.description()
+                model.description(),
+                model.companyLogo()
         );
     }
 }
