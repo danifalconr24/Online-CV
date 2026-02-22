@@ -1,4 +1,5 @@
 import { computed, ref } from 'vue';
+import { API_ENDPOINTS } from '../config/api';
 
 const TOKEN_KEY = 'cv_auth_token';
 
@@ -18,7 +19,7 @@ export function useAuth() {
   }
 
   async function login(username: string, password: string): Promise<boolean> {
-    const response = await fetch('http://localhost:8080/auth/login', {
+    const response = await fetch(API_ENDPOINTS.auth.login, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),

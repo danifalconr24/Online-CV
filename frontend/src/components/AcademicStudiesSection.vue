@@ -56,6 +56,7 @@
 <script setup lang="ts">
 import { defineComponent, onBeforeMount, ref, type Ref } from 'vue';
 import { AcademicStudy } from './types/models';
+import { API_ENDPOINTS } from '../config/api';
 
 defineComponent({
   name: 'AcademicStudiesSection',
@@ -66,7 +67,7 @@ const props = defineProps<{
   authHeaders: () => HeadersInit;
 }>();
 
-const BASE_URL = 'http://localhost:8080/v1/curriculum-vitae/academic-studies';
+const BASE_URL = API_ENDPOINTS.academicStudies;
 
 let academicStudiesData: Ref<AcademicStudy[]> = ref([]);
 const editingId = ref<number | null>(null);

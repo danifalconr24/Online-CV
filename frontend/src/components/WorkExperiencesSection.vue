@@ -101,6 +101,7 @@
 <script setup lang="ts">
 import { computed, defineComponent, onBeforeMount, ref, type Ref } from 'vue';
 import { WorkExperience } from './types/models';
+import { API_ENDPOINTS } from '../config/api';
 
 defineComponent({
   name: 'WorkExperiencesSection',
@@ -111,7 +112,7 @@ const props = defineProps<{
   authHeaders: () => HeadersInit;
 }>();
 
-const BASE_URL = 'http://localhost:8080/v1/curriculum-vitae/work-experiences';
+const BASE_URL = API_ENDPOINTS.workExperiences;
 
 let workExperienceData: Ref<WorkExperience[]> = ref([]);
 const editingId = ref<number | null>(null);

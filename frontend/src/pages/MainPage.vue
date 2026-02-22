@@ -113,6 +113,7 @@ import AcademicStudiesSection from '../components/AcademicStudiesSection.vue';
 import WorkExperiencesSection from '../components/WorkExperiencesSection.vue';
 import { GenericInfo } from 'src/components/types/models';
 import { useAuth } from '../composables/useAuth';
+import { API_ENDPOINTS } from '../config/api';
 import profileFallback from '../assets/profile2.jpeg';
 
 defineComponent({
@@ -137,7 +138,7 @@ const imagePreview = ref<string | null>(null);
 const uploadingImage = ref(false);
 
 onBeforeMount(async () => {
-  const response = await fetch('http://localhost:8080/v1/curriculum-vitae/generic-info');
+  const response = await fetch(API_ENDPOINTS.genericInfo);
   if (response.ok) {
     genericInfoData.value = await response.json();
   }
@@ -155,7 +156,7 @@ function cancelEditAboutMe() {
 async function saveAboutMe() {
   savingAboutMe.value = true;
   const response = await fetch(
-    `http://localhost:8080/v1/curriculum-vitae/generic-info/${genericInfoData.value.id}`,
+    `${API_ENDPOINTS.genericInfo}/${genericInfoData.value.id}`,
     {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', ...authHeaders() },
@@ -190,7 +191,7 @@ async function uploadImage() {
   const formData = new FormData();
   formData.append('file', selectedFile.value);
   const response = await fetch(
-    `http://localhost:8080/v1/curriculum-vitae/generic-info/${genericInfoData.value.id}/image`,
+    `${API_ENDPOINTS.genericInfo}/${genericInfoData.value.id}/image`,
     {
       method: 'PUT',
       headers: { ...authHeaders() },
