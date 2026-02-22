@@ -2,44 +2,41 @@
   <div class="cv-container">
 
     <header class="cv-header">
+      <div
+        class="cv-header__photo-wrap"
+        :class="{ 'cv-header__photo-wrap--editable': isAuthenticated }"
+        @click="isAuthenticated && (showImageUpload = true)"
+      >
+        <q-img
+          :src="genericInfoData.profileImage
+            ? `data:image/*;base64,${genericInfoData.profileImage}`
+            : profileFallback"
+          ratio="1"
+        />
+        <div v-if="isAuthenticated" class="cv-photo-overlay">
+          <q-icon name="edit" size="28px" color="white" />
+        </div>
+      </div>
       <div class="cv-header__content">
-        <div>
-          <p class="cv-header__label">Curriculum Vitae</p>
-          <h1 class="cv-header__name">Daniel Falcón Ruiz</h1>
-        </div>
-        <div class="cv-header__right">
-          <div
-            class="cv-header__photo-wrap"
-            :class="{ 'cv-header__photo-wrap--editable': isAuthenticated }"
-            @click="isAuthenticated && (showImageUpload = true)"
-          >
-            <q-img
-              :src="genericInfoData.profileImage
-                ? `data:image/*;base64,${genericInfoData.profileImage}`
-                : profileFallback"
-              ratio="1"
-            />
-            <div v-if="isAuthenticated" class="cv-photo-overlay">
-              <q-icon name="edit" size="28px" color="white" />
-            </div>
-          </div>
-          <q-btn
-            v-if="!isAuthenticated"
-            flat
-            icon="lock"
-            label="Login"
-            class="cv-login-btn"
-            @click="router.push('/login')"
-          />
-          <q-btn
-            v-else
-            flat
-            icon="logout"
-            label="Logout"
-            class="cv-login-btn"
-            @click="logout"
-          />
-        </div>
+        <p class="cv-header__label">Curriculum Vitae</p>
+        <h1 class="cv-header__name">Daniel Falcón Ruiz</h1>
+        <p class="cv-header__subtitle">Java Software Engineer</p>
+        <q-btn
+          v-if="!isAuthenticated"
+          flat
+          icon="lock"
+          label="Login"
+          class="cv-login-btn"
+          @click="router.push('/login')"
+        />
+        <q-btn
+          v-else
+          flat
+          icon="logout"
+          label="Logout"
+          class="cv-login-btn"
+          @click="logout"
+        />
       </div>
     </header>
 
