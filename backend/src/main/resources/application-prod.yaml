@@ -1,0 +1,36 @@
+quarkus:
+  http:
+    cors:
+      origins: ${CORS_ORIGIN}
+      headers: accept,authorization,content-type,x-requested-with
+      methods: GET,POST,PUT,DELETE,OPTIONS
+  datasource:
+    db-kind: postgresql
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    jdbc:
+      url: ${DATABASE_URL}
+  hibernate-orm:
+    physical-naming-strategy: es.danifalconr.infrastructure.config.SnakeCasePhysicalNamingStrategy
+    database:
+      generation: validate
+
+mp:
+  jwt:
+    verify:
+      publickey:
+        location: publicKey.pem
+      issuer: ${JWT_ISSUER:https://online-cv.danifalconr.es}
+
+smallrye:
+  jwt:
+    sign:
+      key:
+        location: privateKey.pem
+
+app:
+  admin:
+    username: ${ADMIN_USERNAME}
+    password: ${ADMIN_PASSWORD}
+  jwt:
+    duration: ${JWT_DURATION:3600}

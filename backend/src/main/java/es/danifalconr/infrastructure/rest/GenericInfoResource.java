@@ -10,6 +10,9 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.resteasy.reactive.multipart.FileUpload;
 import org.jboss.resteasy.reactive.RestForm;
 
@@ -20,6 +23,7 @@ import java.util.Base64;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/v1/curriculum-vitae/generic-info")
+@Tag(name = "Generic Info")
 public class GenericInfoResource {
 
     private final GenericInfoService genericInfoService;
@@ -30,6 +34,8 @@ public class GenericInfoResource {
 
     @GET
     @PermitAll
+    @Operation(summary = "Get generic info")
+    @APIResponse(responseCode = "200", description = "Generic info retrieved")
     public GenericInfoResponse getGenericInfo() {
         return GenericInfoResponse.fromDomain(genericInfoService.getLatest());
     }
@@ -37,6 +43,10 @@ public class GenericInfoResource {
     @PUT
     @Path("/{id}")
     @RolesAllowed("admin")
+    @Operation(summary = "Update generic info")
+    @APIResponse(responseCode = "200", description = "Generic info updated")
+    @APIResponse(responseCode = "401", description = "Unauthorized")
+    @APIResponse(responseCode = "404", description = "Not found")
     public GenericInfoResponse updateGenericInfo(@PathParam("id") Long id, @NotNull @Valid GenericInfoRequest request) {
         return GenericInfoResponse.fromDomain(genericInfoService.update(id, request.toDomain()));
     }
@@ -45,6 +55,10 @@ public class GenericInfoResource {
     @Path("/{id}/image")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @RolesAllowed("admin")
+    @Operation(summary = "Upload profile image")
+    @APIResponse(responseCode = "200", description = "Image uploaded")
+    @APIResponse(responseCode = "401", description = "Unauthorized")
+    @APIResponse(responseCode = "404", description = "Not found")
     public GenericInfoResponse uploadImage(@PathParam("id") Long id, @RestForm("file") FileUpload file) throws IOException {
         byte[] bytes = Files.readAllBytes(file.uploadedFile());
         String base64Image = Base64.getEncoder().encodeToString(bytes);

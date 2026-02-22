@@ -1,15 +1,16 @@
 package es.danifalconr.infrastructure.rest.dto;
 
 import es.danifalconr.domain.model.WorkExperience;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 public record WorkExperienceResponse(
-        Long id,
-        String startDate,
-        String endDate,
-        Boolean current,
-        String company,
-        String description,
-        String companyLogo
+        @Schema(description = "Unique identifier") Long id,
+        @Schema(description = "Start date") String startDate,
+        @Schema(description = "End date") String endDate,
+        @Schema(description = "Whether this is the current position") Boolean current,
+        @Schema(description = "Company name") String company,
+        @Schema(description = "Role or job description") String description,
+        @Schema(description = "Base64-encoded company logo") String companyLogo
 ) {
 
     public static WorkExperienceResponse fromDomain(WorkExperience model) {
