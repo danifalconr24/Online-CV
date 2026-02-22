@@ -8,8 +8,20 @@
           <h1 class="cv-header__name">Daniel Falcón Ruiz</h1>
         </div>
         <div class="cv-header__right">
-          <div class="cv-header__photo-wrap">
-            <q-img src="../assets/profile2.jpeg" ratio="1" />
+          <div
+            class="cv-header__photo-wrap"
+            :class="{ 'cv-header__photo-wrap--editable': isAuthenticated }"
+            @click="isAuthenticated && (showImageUpload = true)"
+          >
+            <q-img
+              :src="genericInfoData.profileImage
+                ? `data:image/*;base64,${genericInfoData.profileImage}`
+                : profileFallback"
+              ratio="1"
+            />
+            <div v-if="isAuthenticated" class="cv-photo-overlay">
+              <q-icon name="edit" size="28px" color="white" />
+            </div>
           </div>
           <q-btn
             v-if="!isAuthenticated"
@@ -64,6 +76,36 @@
     <WorkExperiencesSection :is-authenticated="isAuthenticated" :auth-headers="authHeaders" />
     <AcademicStudiesSection :is-authenticated="isAuthenticated" :auth-headers="authHeaders" />
 
+    <q-dialog v-model="showImageUpload">
+      <q-card style="min-width: 360px">
+        <q-card-section>
+          <div class="text-h6">Update Profile Image</div>
+        </q-card-section>
+        <q-card-section>
+          <input
+            type="file"
+            accept="image/*"
+            @change="onFileSelect"
+            ref="fileInput"
+          />
+          <div v-if="imagePreview" class="cv-image-preview">
+            <img :src="imagePreview" alt="Preview" />
+          </div>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" @click="showImageUpload = false" />
+          <q-btn
+            unelevated
+            color="primary"
+            label="Save"
+            :loading="uploadingImage"
+            :disable="!selectedFile"
+            @click="uploadImage"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
   </div>
 </template>
 
@@ -74,6 +116,7 @@ import AcademicStudiesSection from '../components/AcademicStudiesSection.vue';
 import WorkExperiencesSection from '../components/WorkExperiencesSection.vue';
 import { GenericInfo } from 'src/components/types/models';
 import { useAuth } from '../composables/useAuth';
+import profileFallback from '../assets/profile2.jpeg';
 
 defineComponent({
   name: 'MainPage',
@@ -90,6 +133,11 @@ let genericInfoData: Ref<GenericInfo> = ref({} as GenericInfo);
 const editingAboutMe = ref(false);
 const aboutMeDraft = ref('');
 const savingAboutMe = ref(false);
+
+const showImageUpload = ref(false);
+const selectedFile = ref<File | null>(null);
+const imagePreview = ref<string | null>(null);
+const uploadingImage = ref(false);
 
 onBeforeMount(async () => {
   const response = await fetch('http://localhost:8080/v1/curriculum-vitae/generic-info');
@@ -122,5 +170,42 @@ async function saveAboutMe() {
     editingAboutMe.value = false;
   }
   savingAboutMe.value = false;
+}
+
+function onFileSelect(event: Event) {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0] ?? null;
+  selectedFile.value = file;
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      imagePreview.value = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  } else {
+    imagePreview.value = null;
+  }
+}
+
+async function uploadImage() {
+  if (!selectedFile.value) return;
+  uploadingImage.value = true;
+  const formData = new FormData();
+  formData.append('file', selectedFile.value);
+  const response = await fetch(
+    `http://localhost:8080/v1/curriculum-vitae/generic-info/${genericInfoData.value.id}/image`,
+    {
+      method: 'PUT',
+      headers: { ...authHeaders() },
+      body: formData,
+    }
+  );
+  if (response.ok) {
+    genericInfoData.value = await response.json();
+    showImageUpload.value = false;
+    selectedFile.value = null;
+    imagePreview.value = null;
+  }
+  uploadingImage.value = false;
 }
 </script>

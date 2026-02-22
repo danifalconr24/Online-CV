@@ -18,6 +18,7 @@ export interface AcademicStudy {
 
 export interface GenericInfo {
   id: number,
-  aboutMe: string
+  aboutMe: string,
+  profileImage: string | null
 }
 

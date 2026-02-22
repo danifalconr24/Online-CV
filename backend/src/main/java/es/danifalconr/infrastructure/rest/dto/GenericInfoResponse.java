@@ -2,9 +2,9 @@ package es.danifalconr.infrastructure.rest.dto;
 
 import es.danifalconr.domain.model.GenericInfo;
 
-public record GenericInfoResponse(Long id, String aboutMe) {
+public record GenericInfoResponse(Long id, String aboutMe, String profileImage) {
 
     public static GenericInfoResponse fromDomain(GenericInfo model) {
-        return new GenericInfoResponse(model.id(), model.aboutMe());
+        return new GenericInfoResponse(model.id(), model.aboutMe(), model.profileImage());
     }
 }

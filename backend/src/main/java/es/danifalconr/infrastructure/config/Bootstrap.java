@@ -41,7 +41,7 @@ public class Bootstrap {
                 using Quarkus and Spring. Strong focus on clean code, best practices, and thoroughly \
                 tested functionalities. Skilled in modern cloud-native tooling, leveraging Docker and \
                 Kubernetes for deployment, AWS for cloud infrastructure, and GitHub Actions for robust \
-                CI/CD pipelines.""");
+                CI/CD pipelines.""", null);
         genericInfoService.save(genericInfo);
     }
 

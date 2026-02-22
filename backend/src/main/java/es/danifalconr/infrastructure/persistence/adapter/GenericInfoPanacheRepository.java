@@ -28,6 +28,7 @@ public class GenericInfoPanacheRepository implements GenericInfoRepository, Pana
             throw new EntityNotFoundException("GenericInfo not found with id: " + id);
         }
         entity.aboutMe = genericInfo.aboutMe();
+        entity.profileImage = genericInfo.profileImage();
         return GenericInfoPersistenceMapper.toDomain(entity);
     }
 

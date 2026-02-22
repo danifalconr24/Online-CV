@@ -9,13 +9,14 @@ public final class GenericInfoPersistenceMapper {
     }
 
     public static GenericInfo toDomain(GenericInfoEntity entity) {
-        return new GenericInfo(entity.id, entity.aboutMe);
+        return new GenericInfo(entity.id, entity.aboutMe, entity.profileImage);
     }
 
     public static GenericInfoEntity toEntity(GenericInfo model) {
         GenericInfoEntity entity = new GenericInfoEntity();
         entity.id = model.id();
         entity.aboutMe = model.aboutMe();
+        entity.profileImage = model.profileImage();
         return entity;
     }
 }

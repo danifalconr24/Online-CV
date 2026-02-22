@@ -16,6 +16,9 @@ public class GenericInfoEntity extends PanacheEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     public String aboutMe;
 
+    @Column(columnDefinition = "TEXT")
+    public String profileImage;
+
     @UpdateTimestamp
     public Instant updatedAt;
 

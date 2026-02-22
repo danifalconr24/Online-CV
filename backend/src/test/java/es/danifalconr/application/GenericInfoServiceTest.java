@@ -23,7 +23,7 @@ class GenericInfoServiceTest {
 
     @Test
     void getLatest_returnsLatestEntryFromRepository() {
-        GenericInfo expected = new GenericInfo(1L, "Java Software Engineer");
+        GenericInfo expected = new GenericInfo(1L, "Java Software Engineer", null);
         when(genericInfoRepository.findLatest()).thenReturn(expected);
 
         GenericInfo result = genericInfoService.getLatest();
@@ -35,8 +35,8 @@ class GenericInfoServiceTest {
 
     @Test
     void save_delegatesToRepositoryAndReturnsPersistedEntity() {
-        GenericInfo input = new GenericInfo(null, "Full-Stack Developer");
-        GenericInfo persisted = new GenericInfo(1L, "Full-Stack Developer");
+        GenericInfo input = new GenericInfo(null, "Full-Stack Developer", null);
+        GenericInfo persisted = new GenericInfo(1L, "Full-Stack Developer", null);
         when(genericInfoRepository.save(input)).thenReturn(persisted);
 
         GenericInfo result = genericInfoService.save(input);
@@ -48,8 +48,8 @@ class GenericInfoServiceTest {
 
     @Test
     void update_delegatesToRepositoryAndReturnsUpdatedEntity() {
-        GenericInfo input = new GenericInfo(null, "Updated bio text");
-        GenericInfo updated = new GenericInfo(1L, "Updated bio text");
+        GenericInfo input = new GenericInfo(null, "Updated bio text", null);
+        GenericInfo updated = new GenericInfo(1L, "Updated bio text", null);
         when(genericInfoRepository.update(1L, input)).thenReturn(updated);
 
         GenericInfo result = genericInfoService.update(1L, input);
@@ -60,7 +60,7 @@ class GenericInfoServiceTest {
 
     @Test
     void update_whenEntityNotFound_propagatesEntityNotFoundException() {
-        GenericInfo input = new GenericInfo(null, "Some bio");
+        GenericInfo input = new GenericInfo(null, "Some bio", null);
         when(genericInfoRepository.update(999L, input))
                 .thenThrow(new EntityNotFoundException("GenericInfo not found with id: 999"));
 
