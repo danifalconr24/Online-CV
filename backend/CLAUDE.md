@@ -55,3 +55,4 @@ java -jar target/quarkus-app/quarkus-run.jar
 - **Try to prioritize Java records instead of Lombok**
 - **Namings**: All variables uses descriptive names and always in english, and classes also in english always.
 - **Readability**: Try to make code readable and follow KISS principles.
+- **coding principles**: SOLID principles and Hexagonal Architecture best practices are followed. 
