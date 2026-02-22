@@ -9,24 +9,24 @@ public final class WorkExperiencePersistenceMapper {
     }
 
     public static WorkExperience toDomain(WorkExperienceEntity entity) {
-        WorkExperience model = new WorkExperience();
-        model.setId(entity.id);
-        model.setStartDate(entity.startDate);
-        model.setEndDate(entity.endDate);
-        model.setCurrent(entity.current);
-        model.setCompany(entity.company);
-        model.setDescription(entity.description);
-        return model;
+        return new WorkExperience(
+                entity.id,
+                entity.startDate,
+                entity.endDate,
+                entity.current,
+                entity.company,
+                entity.description
+        );
     }
 
     public static WorkExperienceEntity toEntity(WorkExperience model) {
         WorkExperienceEntity entity = new WorkExperienceEntity();
-        entity.id = model.getId();
-        entity.startDate = model.getStartDate();
-        entity.endDate = model.getEndDate();
-        entity.current = model.getCurrent();
-        entity.company = model.getCompany();
-        entity.description = model.getDescription();
+        entity.id = model.id();
+        entity.startDate = model.startDate();
+        entity.endDate = model.endDate();
+        entity.current = model.current();
+        entity.company = model.company();
+        entity.description = model.description();
         return entity;
     }
 }

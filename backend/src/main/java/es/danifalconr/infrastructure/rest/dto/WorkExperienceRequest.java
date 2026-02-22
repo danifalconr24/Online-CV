@@ -12,12 +12,6 @@ public record WorkExperienceRequest(
 ) {
 
     public WorkExperience toDomain() {
-        WorkExperience model = new WorkExperience();
-        model.setStartDate(startDate);
-        model.setEndDate(endDate);
-        model.setCurrent(current);
-        model.setCompany(company);
-        model.setDescription(description);
-        return model;
+        return new WorkExperience(null, startDate, endDate, current, company, description);
     }
 }

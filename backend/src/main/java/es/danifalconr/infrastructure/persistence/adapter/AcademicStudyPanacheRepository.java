@@ -1,5 +1,6 @@
 package es.danifalconr.infrastructure.persistence.adapter;
 
+import es.danifalconr.domain.exception.EntityNotFoundException;
 import es.danifalconr.domain.model.AcademicStudy;
 import es.danifalconr.domain.port.out.AcademicStudyRepository;
 import es.danifalconr.infrastructure.persistence.entity.AcademicStudyEntity;
@@ -24,10 +25,10 @@ public class AcademicStudyPanacheRepository implements AcademicStudyRepository, 
     public AcademicStudy update(Long id, AcademicStudy academicStudy) {
         AcademicStudyEntity entity = findById(id);
         if (entity == null) {
-            throw new jakarta.ws.rs.NotFoundException("AcademicStudy not found with id: " + id);
+            throw new EntityNotFoundException("AcademicStudy not found with id: " + id);
         }
-        entity.schoolName = academicStudy.getSchoolName();
-        entity.titleName = academicStudy.getTitleName();
+        entity.schoolName = academicStudy.schoolName();
+        entity.titleName = academicStudy.titleName();
         return AcademicStudyPersistenceMapper.toDomain(entity);
     }
 
@@ -35,7 +36,7 @@ public class AcademicStudyPanacheRepository implements AcademicStudyRepository, 
     public void remove(Long id) {
         AcademicStudyEntity entity = findById(id);
         if (entity == null) {
-            throw new jakarta.ws.rs.NotFoundException("AcademicStudy not found with id: " + id);
+            throw new EntityNotFoundException("AcademicStudy not found with id: " + id);
         }
         delete(entity);
     }

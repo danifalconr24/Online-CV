@@ -9,18 +9,14 @@ public final class AcademicStudyPersistenceMapper {
     }
 
     public static AcademicStudy toDomain(AcademicStudyEntity entity) {
-        AcademicStudy model = new AcademicStudy();
-        model.setId(entity.id);
-        model.setSchoolName(entity.schoolName);
-        model.setTitleName(entity.titleName);
-        return model;
+        return new AcademicStudy(entity.id, entity.schoolName, entity.titleName);
     }
 
     public static AcademicStudyEntity toEntity(AcademicStudy model) {
         AcademicStudyEntity entity = new AcademicStudyEntity();
-        entity.id = model.getId();
-        entity.schoolName = model.getSchoolName();
-        entity.titleName = model.getTitleName();
+        entity.id = model.id();
+        entity.schoolName = model.schoolName();
+        entity.titleName = model.titleName();
         return entity;
     }
 }

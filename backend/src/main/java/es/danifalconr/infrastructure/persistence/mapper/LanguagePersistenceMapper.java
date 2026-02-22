@@ -9,22 +9,14 @@ public final class LanguagePersistenceMapper {
     }
 
     public static Language toDomain(LanguageEntity entity) {
-        Language model = new Language();
-        model.setId(entity.id);
-        model.setName(entity.name);
-        if (entity.level != null) {
-            model.setLevel(Language.Level.valueOf(entity.level.name()));
-        }
-        return model;
+        return new Language(entity.id, entity.name, entity.level);
     }
 
     public static LanguageEntity toEntity(Language model) {
         LanguageEntity entity = new LanguageEntity();
-        entity.id = model.getId();
-        entity.name = model.getName();
-        if (model.getLevel() != null) {
-            entity.level = LanguageEntity.Level.valueOf(model.getLevel().name());
-        }
+        entity.id = model.id();
+        entity.name = model.name();
+        entity.level = model.level();
         return entity;
     }
 }

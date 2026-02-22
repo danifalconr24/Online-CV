@@ -1,5 +1,6 @@
 package es.danifalconr.infrastructure.persistence.adapter;
 
+import es.danifalconr.domain.exception.EntityNotFoundException;
 import es.danifalconr.domain.model.WorkExperience;
 import es.danifalconr.domain.port.out.WorkExperienceRepository;
 import es.danifalconr.infrastructure.persistence.entity.WorkExperienceEntity;
@@ -24,13 +25,13 @@ public class WorkExperiencePanacheRepository implements WorkExperienceRepository
     public WorkExperience update(Long id, WorkExperience workExperience) {
         WorkExperienceEntity entity = findById(id);
         if (entity == null) {
-            throw new jakarta.ws.rs.NotFoundException("WorkExperience not found with id: " + id);
+            throw new EntityNotFoundException("WorkExperience not found with id: " + id);
         }
-        entity.startDate = workExperience.getStartDate();
-        entity.endDate = workExperience.getEndDate();
-        entity.current = workExperience.getCurrent();
-        entity.company = workExperience.getCompany();
-        entity.description = workExperience.getDescription();
+        entity.startDate = workExperience.startDate();
+        entity.endDate = workExperience.endDate();
+        entity.current = workExperience.current();
+        entity.company = workExperience.company();
+        entity.description = workExperience.description();
         return WorkExperiencePersistenceMapper.toDomain(entity);
     }
 
@@ -38,7 +39,7 @@ public class WorkExperiencePanacheRepository implements WorkExperienceRepository
     public void remove(Long id) {
         WorkExperienceEntity entity = findById(id);
         if (entity == null) {
-            throw new jakarta.ws.rs.NotFoundException("WorkExperience not found with id: " + id);
+            throw new EntityNotFoundException("WorkExperience not found with id: " + id);
         }
         delete(entity);
     }

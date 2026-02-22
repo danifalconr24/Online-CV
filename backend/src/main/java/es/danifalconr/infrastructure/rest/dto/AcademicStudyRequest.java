@@ -9,9 +9,6 @@ public record AcademicStudyRequest(
 ) {
 
     public AcademicStudy toDomain() {
-        AcademicStudy model = new AcademicStudy();
-        model.setSchoolName(schoolName);
-        model.setTitleName(titleName);
-        return model;
+        return new AcademicStudy(null, schoolName, titleName);
     }
 }

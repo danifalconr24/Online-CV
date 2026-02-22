@@ -13,12 +13,12 @@ public record WorkExperienceResponse(
 
     public static WorkExperienceResponse fromDomain(WorkExperience model) {
         return new WorkExperienceResponse(
-                model.getId(),
-                model.getStartDate(),
-                model.getEndDate(),
-                model.getCurrent(),
-                model.getCompany(),
-                model.getDescription()
+                model.id(),
+                model.startDate(),
+                model.endDate(),
+                model.current(),
+                model.company(),
+                model.description()
         );
     }
 }

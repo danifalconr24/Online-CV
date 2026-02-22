@@ -1,5 +1,6 @@
 package es.danifalconr.infrastructure.persistence.adapter;
 
+import es.danifalconr.domain.exception.EntityNotFoundException;
 import es.danifalconr.domain.model.GenericInfo;
 import es.danifalconr.domain.port.out.GenericInfoRepository;
 import es.danifalconr.infrastructure.persistence.entity.GenericInfoEntity;
@@ -24,9 +25,9 @@ public class GenericInfoPanacheRepository implements GenericInfoRepository, Pana
     public GenericInfo update(Long id, GenericInfo genericInfo) {
         GenericInfoEntity entity = findById(id);
         if (entity == null) {
-            throw new jakarta.ws.rs.NotFoundException("GenericInfo not found with id: " + id);
+            throw new EntityNotFoundException("GenericInfo not found with id: " + id);
         }
-        entity.aboutMe = genericInfo.getAboutMe();
+        entity.aboutMe = genericInfo.aboutMe();
         return GenericInfoPersistenceMapper.toDomain(entity);
     }
 
