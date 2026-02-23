@@ -103,11 +103,6 @@ jobs:
           ./mvnw clean package -Pnative -Dquarkus.native.enabled=true \
             -Dquarkus.native.container-build=true
 
-      - name: Prepare Lambda deployment package
-        run: |
-          cd target
-          zip -j function.zip bootstrap
-
       - name: Deploy to Lambda
         run: |
           aws lambda update-function-code \
