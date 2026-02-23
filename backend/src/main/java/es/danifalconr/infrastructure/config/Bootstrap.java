@@ -6,11 +6,13 @@ import es.danifalconr.application.WorkExperienceService;
 import es.danifalconr.domain.model.AcademicStudy;
 import es.danifalconr.domain.model.GenericInfo;
 import es.danifalconr.domain.model.WorkExperience;
+import io.quarkus.arc.profile.IfBuildProfile;
 import io.quarkus.runtime.Startup;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
 
+@IfBuildProfile("dev")
 @ApplicationScoped
 public class Bootstrap {
 
