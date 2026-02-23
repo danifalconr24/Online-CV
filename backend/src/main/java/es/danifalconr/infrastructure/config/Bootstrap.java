@@ -12,8 +12,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
 
-@IfBuildProfile("dev")
 @ApplicationScoped
+@IfBuildProfile(anyOf = {"dev", "test"})
 public class Bootstrap {
 
     private final GenericInfoService genericInfoService;
