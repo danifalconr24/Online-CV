@@ -118,7 +118,7 @@ jobs:
         run: |
           aws lambda update-function-configuration \
             --function-name ${{ secrets.LAMBDA_FUNCTION_NAME }} \
-            --environment "Variables={DATABASE_URL=${{ secrets.SUPABASE_JDBC_URL }},DATABASE_USERNAME=${{ secrets.SUPABASE_USERNAME }},DATABASE_PASSWORD=${{ secrets.SUPABASE_PASSWORD }},ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME }},ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }},CORS_ORIGIN=${{ secrets.CLOUDFRONT_URL }},JWT_ISSUER=${{ secrets.JWT_ISSUER }}}"
+            --environment '{"Variables":{"DATABASE_URL":"${{ secrets.SUPABASE_JDBC_URL }}","DATABASE_USERNAME":"${{ secrets.SUPABASE_USERNAME }}","DATABASE_PASSWORD":"${{ secrets.SUPABASE_PASSWORD }}","ADMIN_USERNAME":"${{ secrets.ADMIN_USERNAME }}","ADMIN_PASSWORD":"${{ secrets.ADMIN_PASSWORD }}","CORS_ORIGIN":"${{ secrets.CLOUDFRONT_URL }}","JWT_ISSUER":"${{ secrets.JWT_ISSUER }}"}}'
 
   deploy-frontend:
     name: Deploy Frontend to S3
