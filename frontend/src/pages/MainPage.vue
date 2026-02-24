@@ -22,7 +22,7 @@
         <h1 class="cv-header__name">Daniel Falcón Ruiz</h1>
         <p class="cv-header__subtitle">Java Software Engineer</p>
         <q-btn
-          v-if="!isAuthenticated"
+          v-if="!isAuthenticated && showLoginButton"
           flat
           icon="lock"
           label="Login"
@@ -30,12 +30,12 @@
           @click="router.push('/login')"
         />
         <q-btn
-          v-else
+          v-else-if="isAuthenticated"
           flat
           icon="logout"
           label="Logout"
           class="cv-login-btn"
-          @click="logout"
+          @click="() => { logout(); router.replace('/'); }"
         />
       </div>
     </header>
@@ -107,8 +107,8 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, defineComponent, onBeforeMount, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { Ref, computed, defineComponent, onBeforeMount, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import AcademicStudiesSection from '../components/AcademicStudiesSection.vue';
 import WorkExperiencesSection from '../components/WorkExperiencesSection.vue';
 import { GenericInfo } from 'src/components/types/models';
@@ -125,7 +125,10 @@ defineComponent({
 });
 
 const router = useRouter();
+const route = useRoute();
 const { isAuthenticated, logout, authHeaders } = useAuth();
+
+const showLoginButton = computed(() => route.query.isAdmin === 'true');
 
 let genericInfoData: Ref<GenericInfo> = ref({} as GenericInfo);
 const editingAboutMe = ref(false);
