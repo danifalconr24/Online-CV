@@ -10,6 +10,7 @@ import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class WorkExperiencePanacheRepository implements WorkExperienceRepository, PanacheRepository<WorkExperienceEntity> {
@@ -51,5 +52,12 @@ public class WorkExperiencePanacheRepository implements WorkExperienceRepository
                 .stream()
                 .map(WorkExperiencePersistenceMapper::toDomain)
                 .toList();
+    }
+
+    @Override
+    public Optional<WorkExperience> getById(Long id) {
+        WorkExperienceEntity entity = findById(id);
+        return Optional.ofNullable(entity)
+                .map(WorkExperiencePersistenceMapper::toDomain);
     }
 }

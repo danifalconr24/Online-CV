@@ -136,6 +136,48 @@ class WorkExperienceResourceTest {
                 .body("description", equalTo("Senior Engineer"));
     }
 
+    // ─── PUT /{id}/logo ──────────────────────────────────────────────────────────
+
+    @Test
+    @TestSecurity(user = "admin", roles = {"admin"})
+    void uploadLogo_withValidId_returnsUpdatedWorkExperience() {
+        int id = given()
+                .contentType(ContentType.JSON)
+                .body(VALID_REQUEST)
+                .when().post(BASE_PATH)
+                .then().statusCode(200)
+                .extract().path("id");
+
+        given()
+                .contentType(ContentType.MULTIPART)
+                .multiPart("file", "logo.png", "fake-image-bytes".getBytes(), "image/png")
+                .when().put(BASE_PATH + "/" + id + "/logo")
+                .then()
+                .statusCode(200)
+                .body("companyLogo", notNullValue());
+    }
+
+    @Test
+    void uploadLogo_withoutAuth_returnsUnauthorized() {
+        given()
+                .contentType(ContentType.MULTIPART)
+                .multiPart("file", "logo.png", "fake-image-bytes".getBytes(), "image/png")
+                .when().put(BASE_PATH + "/1/logo")
+                .then()
+                .statusCode(401);
+    }
+
+    @Test
+    @TestSecurity(user = "admin", roles = {"admin"})
+    void uploadLogo_withNonExistentId_returnsNotFound() {
+        given()
+                .contentType(ContentType.MULTIPART)
+                .multiPart("file", "logo.png", "fake-image-bytes".getBytes(), "image/png")
+                .when().put(BASE_PATH + "/99999/logo")
+                .then()
+                .statusCode(404);
+    }
+
     // ─── DELETE ─────────────────────────────────────────────────────────────────
 
     @Test

@@ -9,9 +9,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -89,5 +92,27 @@ class WorkExperienceServiceTest {
         assertEquals("Latest Corp", result.get(0).company());
         assertEquals("Old Corp", result.get(1).company());
         verify(workExperienceRepository).findAllOrderByCreatedAtDesc();
+    }
+
+    @Test
+    void updateLogo_encodesAndUpdatesLogo() {
+        byte[] imageBytes = "fake-image".getBytes();
+        String expectedBase64 = Base64.getEncoder().encodeToString(imageBytes);
+        WorkExperience existing = new WorkExperience(1L, "2023-01", null, true, "ACME", "Dev", null);
+        WorkExperience updatedResult = new WorkExperience(1L, "2023-01", null, true, "ACME", "Dev", expectedBase64);
+
+        when(workExperienceRepository.getById(1L)).thenReturn(Optional.of(existing));
+        when(workExperienceRepository.update(eq(1L), any())).thenReturn(updatedResult);
+
+        WorkExperience result = workExperienceService.updateLogo(1L, imageBytes);
+
+        assertEquals(expectedBase64, result.companyLogo());
+        verify(workExperienceRepository).update(eq(1L), argThat(w -> expectedBase64.equals(w.companyLogo())));
+    }
+
+    @Test
+    void updateLogo_whenEntityNotFound_throwsEntityNotFoundException() {
+        when(workExperienceRepository.getById(99L)).thenReturn(Optional.empty());
+        assertThrows(EntityNotFoundException.class, () -> workExperienceService.updateLogo(99L, new byte[0]));
     }
 }
