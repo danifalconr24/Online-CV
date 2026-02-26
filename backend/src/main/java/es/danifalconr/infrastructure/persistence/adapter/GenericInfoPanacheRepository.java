@@ -9,7 +9,7 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 
-import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class GenericInfoPanacheRepository implements GenericInfoRepository, PanacheRepository<GenericInfoEntity> {
@@ -33,8 +33,14 @@ public class GenericInfoPanacheRepository implements GenericInfoRepository, Pana
     }
 
     @Override
-    public GenericInfo findLatest() {
-        List<GenericInfoEntity> all = listAll(Sort.by("updatedAt"));
-        return all.isEmpty() ? null : GenericInfoPersistenceMapper.toDomain(all.getFirst());
+    public Optional<GenericInfo> findLatest() {
+        return findAll(Sort.by("updatedAt").descending()).firstResultOptional()
+                .map(GenericInfoPersistenceMapper::toDomain);
+    }
+
+    @Override
+    public Optional<GenericInfo> getById(Long id) {
+        return Optional.ofNullable(findById(id))
+                .map(GenericInfoPersistenceMapper::toDomain);
     }
 }

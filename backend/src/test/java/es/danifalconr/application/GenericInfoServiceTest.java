@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -24,7 +26,7 @@ class GenericInfoServiceTest {
     @Test
     void getLatest_returnsLatestEntryFromRepository() {
         GenericInfo expected = new GenericInfo(1L, "Java Software Engineer", null);
-        when(genericInfoRepository.findLatest()).thenReturn(expected);
+        when(genericInfoRepository.findLatest()).thenReturn(Optional.of(expected));
 
         GenericInfo result = genericInfoService.getLatest();
 

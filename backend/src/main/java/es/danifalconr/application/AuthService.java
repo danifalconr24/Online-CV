@@ -5,24 +5,26 @@ import es.danifalconr.domain.exception.InvalidTokenException;
 import es.danifalconr.domain.model.AuthToken;
 import es.danifalconr.domain.port.out.TokenService;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @ApplicationScoped
 public class AuthService {
 
-    @ConfigProperty(name = "app.admin.username")
-    String adminUsername;
-
-    @ConfigProperty(name = "app.admin.password")
-    String adminPassword;
-
-    @ConfigProperty(name = "app.jwt.duration")
-    long jwtDurationSeconds;
-
     private final TokenService tokenService;
+    private final String adminUsername;
+    private final String adminPassword;
+    private final long jwtDurationSeconds;
 
-    public AuthService(TokenService tokenService) {
+    @Inject
+    public AuthService(TokenService tokenService,
+                       @ConfigProperty(name = "app.admin.username") String adminUsername,
+                       @ConfigProperty(name = "app.admin.password") String adminPassword,
+                       @ConfigProperty(name = "app.jwt.duration") long jwtDurationSeconds) {
         this.tokenService = tokenService;
+        this.adminUsername = adminUsername;
+        this.adminPassword = adminPassword;
+        this.jwtDurationSeconds = jwtDurationSeconds;
     }
 
     public AuthToken login(String username, String password) {
