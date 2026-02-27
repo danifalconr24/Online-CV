@@ -1,16 +1,24 @@
 <template>
   <div class="cv-container">
 
-    <header class="cv-header">
+    <div class="cv-floating-header" :class="{ 'cv-floating-header--visible': showFloatingHeader }">
+      <div class="cv-floating-header__photo">
+        <q-img :src="profileImageSrc" ratio="1" />
+      </div>
+      <div class="cv-floating-header__text">
+        <span class="cv-floating-header__name">Daniel Falcón Ruiz</span>
+        <span class="cv-floating-header__subtitle">Java Software Engineer</span>
+      </div>
+    </div>
+
+    <header ref="headerRef" class="cv-header">
       <div
         class="cv-header__photo-wrap"
         :class="{ 'cv-header__photo-wrap--editable': isAuthenticated }"
         @click="isAuthenticated && (showImageUpload = true)"
       >
         <q-img
-          :src="genericInfoData.profileImage
-            ? `data:image/*;base64,${genericInfoData.profileImage}`
-            : profileFallback"
+          :src="profileImageSrc"
           ratio="1"
         />
         <div v-if="isAuthenticated" class="cv-photo-overlay">
@@ -107,7 +115,15 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, computed, defineComponent, onBeforeMount, ref } from 'vue';
+import {
+  Ref,
+  computed,
+  defineComponent,
+  onBeforeMount,
+  onMounted,
+  onUnmounted,
+  ref,
+} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import AcademicStudiesSection from '../components/AcademicStudiesSection.vue';
 import WorkExperiencesSection from '../components/WorkExperiencesSection.vue';
@@ -130,7 +146,17 @@ const { isAuthenticated, logout, authHeaders } = useAuth();
 
 const showLoginButton = computed(() => route.query.isAdmin === 'true');
 
+const headerRef = ref<HTMLElement | null>(null);
+const showFloatingHeader = ref(false);
+let headerObserver: IntersectionObserver | null = null;
+
 let genericInfoData: Ref<GenericInfo> = ref({} as GenericInfo);
+
+const profileImageSrc = computed(() =>
+  genericInfoData.value.profileImage
+    ? `data:image/*;base64,${genericInfoData.value.profileImage}`
+    : profileFallback,
+);
 const editingAboutMe = ref(false);
 const aboutMeDraft = ref('');
 const savingAboutMe = ref(false);
@@ -139,6 +165,22 @@ const showImageUpload = ref(false);
 const selectedFile = ref<File | null>(null);
 const imagePreview = ref<string | null>(null);
 const uploadingImage = ref(false);
+
+onMounted(() => {
+  if (headerRef.value) {
+    headerObserver = new IntersectionObserver(
+      ([entry]) => {
+        showFloatingHeader.value = !entry.isIntersecting;
+      },
+      { threshold: 0 },
+    );
+    headerObserver.observe(headerRef.value);
+  }
+});
+
+onUnmounted(() => {
+  headerObserver?.disconnect();
+});
 
 onBeforeMount(async () => {
   const response = await fetch(API_ENDPOINTS.genericInfo);
