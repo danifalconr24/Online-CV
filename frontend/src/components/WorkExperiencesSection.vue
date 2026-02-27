@@ -65,6 +65,7 @@
           </q-file>
           <div v-if="editLogoPreview" class="cv-experience__logo-preview">
             <img :src="editLogoPreview" alt="Logo preview" />
+            <q-btn flat dense size="sm" icon="close" label="Remove logo" @click="editDraft.companyLogo = null; editLogoFile = null" />
           </div>
           <div class="cv-edit__actions">
             <q-btn flat label="Cancel" @click="cancelEdit" />
@@ -116,7 +117,7 @@ const BASE_URL = API_ENDPOINTS.workExperiences;
 
 let workExperienceData: Ref<WorkExperience[]> = ref([]);
 const editingId = ref<number | null>(null);
-const editDraft = ref({ company: '', startDate: '', endDate: '', description: '' });
+const editDraft = ref({ company: '', startDate: '', endDate: '', description: '', companyLogo: null as string | null });
 const editLogoFile = ref<File | null>(null);
 const creatingNew = ref(false);
 const newDraft = ref({ company: '', startDate: '', endDate: '', description: '' });
@@ -129,8 +130,9 @@ const newLogoPreview = computed(() => {
 });
 
 const editLogoPreview = computed(() => {
-  if (!editLogoFile.value) return null;
-  return URL.createObjectURL(editLogoFile.value);
+  if (editLogoFile.value) return URL.createObjectURL(editLogoFile.value);
+  if (editDraft.value.companyLogo) return 'data:image/png;base64,' + editDraft.value.companyLogo;
+  return null;
 });
 
 onBeforeMount(async () => {
@@ -162,6 +164,7 @@ function startEdit(item: WorkExperience) {
     startDate: item.startDate,
     endDate: item.endDate ?? '',
     description: item.description,
+    companyLogo: item.companyLogo ?? null,
   };
 }
 
@@ -180,6 +183,7 @@ async function saveEdit(id: number) {
       startDate: editDraft.value.startDate,
       endDate: editDraft.value.endDate || null,
       description: editDraft.value.description,
+      companyLogo: editDraft.value.companyLogo,
     }),
   });
   if (response.ok) {
