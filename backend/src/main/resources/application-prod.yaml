@@ -14,6 +14,12 @@ quarkus:
     physical-naming-strategy: es.danifalconr.infrastructure.config.SnakeCasePhysicalNamingStrategy
     database:
       generation: validate
+  swagger-ui:
+    always-include: true
+  smallrye-openapi:
+    info-title: Online CV API
+    info-version: 1.0.0
+    info-description: REST API for personal online CV
 
 mp:
   jwt:
