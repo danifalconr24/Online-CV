@@ -21,6 +21,8 @@ quarkus:
       generation: validate
   swagger-ui:
     always-include: true
+    urls:
+      default: ${SWAGGER_OPENAPI_URL:/q/openapi}
   smallrye-openapi:
     info-title: Online CV API
     info-version: 1.0.0
